@@ -1,0 +1,26 @@
+{
+	"FileVersion": 3,
+	"Version": 1,
+	"VersionName": "1.0",
+	"FriendlyName": "FH_ReadWriteLocalFile",
+	"Description": "ReadWriteLocalFile_Plugin",
+	"Category": "Other",
+	"CreatedBy": "Fangh",
+	"CreatedByURL": "fangh.space",
+	"DocsURL": "",
+	"MarketplaceURL": "",
+	"SupportURL": "",
+	"CanContainContent": true,
+	"IsBetaVersion": true,
+	"IsExperimentalVersion": false,
+	"Installed": false,
+	"Modules": [
+		{
+			"Name": "FH_ReadWriteLocalFile",
+			"Type": "Runtime",
+			"LoadingPhase": "Default",
+			"ProgramAllowList": ["UnrealPak"],
+			"WhitelistPlatforms": ["Win64", "Linux", "Android"]
+		}
+	]
+}
