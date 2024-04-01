@@ -1,6 +1,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "CSVExample.h"
 #include "Kismet/BlueprintFunctionLibrary.h"
 #include "ReadWriteLocalFile.generated.h"
 
@@ -67,4 +68,11 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category="FH|ReadWriteLocalFile")
 	static bool WriteLocalFileByEnum(const EPathDir EPD, const FString& FileName, const FString& Content);
+
+	// Datatable, CSV
+	UFUNCTION(BlueprintPure, Category="FH|ReadWriteLocalFile|DataTableCSV")
+	static UDataTable* ReadCSVToDataTable(const EPathDir EPD, const FString& FileName, const FCSVStruct& TableStruct);
+
+	UFUNCTION(BlueprintPure, Category="FH|ReadWriteLocalFile|DataTableCSV")
+	static FCSVStruct& GetDataTableRowByRowName(const UDataTable* DataTable, const FName& RowName);
 };

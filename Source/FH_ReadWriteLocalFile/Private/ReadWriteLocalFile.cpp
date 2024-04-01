@@ -1,4 +1,5 @@
 #include "ReadWriteLocalFile.h"
+#include "Sound/SoundBase.h"
 
 // Enum Convert String
 FString UReadWriteLocalFile::ConvPathToString(const EPathDir EPD)
@@ -124,4 +125,32 @@ bool UReadWriteLocalFile::WriteLocalFileByEnum(const EPathDir EPD, const FString
 		return FFileHelper::SaveStringToFile(Content, *Path, FFileHelper::EEncodingOptions::ForceUTF8);
 	}
 	return false;
+}
+
+// Datatable, CSV
+UDataTable* UReadWriteLocalFile::ReadCSVToDataTable(const EPathDir EPD, const FString& FileName, const FCSVStruct& TableStruct)
+{
+	if (FileName == "") return nullptr;
+	const auto Path = FPaths::ConvertRelativePathToFull(FString::Printf(TEXT("%s%s.csv"), *ConvPathToString(EPD), *FileName));
+
+	if (FString Data; FFileHelper::LoadFileToString(Data, *Path))
+	{
+		if (const auto DT = NewObject<UDataTable>())
+		{
+			DT->RowStruct = TableStruct.StaticStruct();
+			DT->CreateTableFromCSVString(Data);
+			return DT;
+		}
+	}
+	return nullptr;
+}
+
+FCSVStruct& UReadWriteLocalFile::GetDataTableRowByRowName(const UDataTable* DataTable, const FName& RowName)
+{
+	if (auto* DataRow = DataTable->FindRow<FCSVStruct>(RowName, FString(""), false); DataRow != nullptr)
+	{
+		return *DataRow;
+	}
+	static FCSVStruct DefaultRow;
+	return DefaultRow;
 }
